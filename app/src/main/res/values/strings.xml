@@ -4,4 +4,25 @@
     <string name="search_button_text">Go</string>
     <string name="loading_error">Unable to run query.  Check internet.</string>
     <string name="action_share">Share</string>
+
+
+    <string name="pref_units_Key" translatable="false">pref_units</string>
+    <string name="pref_units_title">Units</string>
+
+    <string name="pref_units_imperial">Imperial</string>
+    <string name="pref_units_metric">Metric</string>
+    <string name="pref_units_imperial_value" translatable="false">imperial</string>
+    <string name="pref_units_metric_value" translatable="false">metric</string>
+    <string name="pref_units_default_value" translatable="false">@string/pref_units_metric_value</string>
+
+    <string name="pref_sort_key" translatable="false">pref_sort</string>
+    <string name="pref_sort_title">Sort By</string>
+    <string name="pref_sort_default">Default</string>
+    <string name="pref_sort_default_value" translatable="false">default</string>
+    <string name="pref_sort_alpha">A-Z</string>
+    <string name="pref_sort_alpha_value" translatable="false">alpha</string>
+    <string name="pref_sort_revAlpha">Z-A</string>
+    <string name="pref_sort_revAlpha_value" translatable="false">revAlpha</string>
+    <string name="pref_sort_original_value" translatable="false">@string/pref_sort_default_value</string>
+
 </resources>
