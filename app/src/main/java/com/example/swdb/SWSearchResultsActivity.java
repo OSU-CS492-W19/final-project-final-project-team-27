@@ -16,7 +16,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.swdb.data.SWFilm;
 import com.example.swdb.data.SWPerson;
+import com.example.swdb.data.SWPlanet;
+import com.example.swdb.data.SWSearchResult;
+import com.example.swdb.data.SWSpecies;
+import com.example.swdb.data.SWStarship;
+import com.example.swdb.data.SWVehicle;
 import com.example.swdb.data.Status;
 import com.example.swdb.utils.SWUtils;
 
@@ -52,10 +58,10 @@ public class SWSearchResultsActivity extends AppCompatActivity implements SWSear
 
         mViewModel = ViewModelProviders.of(this).get(SWSearchViewModel.class);
 
-        mViewModel.getPeopleResults().observe(this, new Observer<List<SWPerson>>() {
+        mViewModel.getSearchResults().observe(this, new Observer<SWSearchResult>() {
             @Override
-            public void onChanged(@Nullable List<SWPerson> people) {
-                mSWSearchAdapter.updateSearchResults(people);
+            public void onChanged(@Nullable SWSearchResult result) {
+                mSWSearchAdapter.updateSearchResults(result);
             }
         });
 
@@ -100,8 +106,33 @@ public class SWSearchResultsActivity extends AppCompatActivity implements SWSear
     }
 
     @Override
-    public void onSearchItemClick(SWPerson person) {
+    public void onSearchFilmClick(SWFilm film) {
+        Log.d(TAG, "go to " + film.title + "'s page");
+    }
+
+    @Override
+    public void onSearchPersonClick(SWPerson person) {
         Log.d(TAG, "go to " + person.name + "'s page");
+    }
+
+    @Override
+    public void onSearchPlanetClick(SWPlanet planet) {
+        Log.d(TAG, "go to " + planet.name + "'s page");
+    }
+
+    @Override
+    public void onSearchSpeciesClick(SWSpecies species) {
+        Log.d(TAG, "go to " + species.name + "'s page");
+    }
+
+    @Override
+    public void onSearchStarshipClick(SWStarship starship) {
+        Log.d(TAG, "go to " + starship.name + "'s page");
+    }
+
+    @Override
+    public void onSearchVehicleClick(SWVehicle vehicle) {
+        Log.d(TAG, "go to " + vehicle.name + "'s page");
     }
 
 }

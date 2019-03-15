@@ -13,14 +13,22 @@ public class SWSearchRepository implements SWSearchAsyncTask.Callback {
 
     private final static String TAG = SWSearchRepository.class.getSimpleName();
 
+    private MutableLiveData<SWSearchResult> mResults;
     private MutableLiveData<List<SWPerson>> mPeople;
+    private MutableLiveData<List<SWFilm>> mFilms;
     private MutableLiveData<Status> mLoadingStatus;
 
     private String mCurrentQuery;
 
     public SWSearchRepository() {
+        mResults = new MutableLiveData<>();
+        mResults.setValue(null);
+
         mPeople = new MutableLiveData<>();
         mPeople.setValue(null);
+
+        mFilms = new MutableLiveData<>();
+        mFilms.setValue(null);
 
         mLoadingStatus = new MutableLiveData<>();
         mLoadingStatus.setValue(Status.SUCCESS);
@@ -28,11 +36,19 @@ public class SWSearchRepository implements SWSearchAsyncTask.Callback {
         mCurrentQuery = null;
     }
 
+    public LiveData<SWSearchResult> getSearchResults() {
+        return mResults;
+    }
+
     public LiveData<List<SWPerson>> getPeopleResults() {
         return mPeople;
     }
 
-    public MutableLiveData<Status> getmLoadingStatus() {
+    public LiveData<List<SWFilm>> getFilmResults() {
+        return mFilms;
+    }
+
+    public MutableLiveData<Status> getLoadingStatus() {
         return mLoadingStatus;
     }
 
@@ -40,6 +56,7 @@ public class SWSearchRepository implements SWSearchAsyncTask.Callback {
         if (shouldExecuteSearch(query)) {
             mCurrentQuery = query;
             mPeople.setValue(null);
+            mFilms.setValue(null);
             mLoadingStatus.setValue(Status.LOADING);
             String url = SWUtils.buildSWSearchURL(query);
             Log.d(TAG, "querying search URL: " + url);
@@ -54,9 +71,10 @@ public class SWSearchRepository implements SWSearchAsyncTask.Callback {
     }
 
     @Override
-    public void onSearchFinished(List<SWPerson> people) {
-        mPeople.setValue(people);
-        if (people != null) {
+    public void onSearchFinished(SWSearchResult results ) {
+        mResults.setValue(results);
+        mPeople.setValue(results.people);
+        if (results != null) {
             mLoadingStatus.setValue(Status.SUCCESS);
         } else {
             mLoadingStatus.setValue(Status.ERROR);

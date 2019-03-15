@@ -1,20 +1,18 @@
 package com.example.swdb.data;
 
 import android.os.AsyncTask;
-import android.telecom.Call;
 
 import com.example.swdb.utils.NetworkUtils;
 import com.example.swdb.utils.SWUtils;
 
 import java.io.IOException;
-import java.util.List;
 
 public class SWSearchAsyncTask extends AsyncTask<Void, Void, String> {
     private String mURL;
     private Callback mCallback;
 
     public interface Callback {
-        void onSearchFinished(List<SWPerson> people);
+        void onSearchFinished(SWSearchResult results);
     }
 
     public SWSearchAsyncTask(String url, Callback callback) {
@@ -39,10 +37,10 @@ public class SWSearchAsyncTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(String s) {
-        List<SWPerson> people = null;
+        SWSearchResult results = new SWSearchResult();
         if (s != null) {
-            people = SWUtils.parseSWPeopleResults(s);
+            results = SWUtils.parseSWSearchResults(s);
         }
-        mCallback.onSearchFinished(people);
+        mCallback.onSearchFinished(results);
     }
 }
