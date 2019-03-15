@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_units_entries">
+        <item>@string/pref_units_imperial</item>
+        <item>@string/pref_units_metric</item>
+    </string-array>
+
+    <string-array name="pref_units_values">
+        <item>@string/pref_units_imperial_value</item>
+        <item>@string/pref_units_metric_value</item>
+    </string-array>
+
+    <string-array name="pref_sort_entries">
+        <item>@string/pref_sort_default</item>
+        <item>@string/pref_sort_alpha</item>
+        <item>@string/pref_sort_revAlpha</item>
+    </string-array>
+
+    <string-array name="pref_sort_values">
+        <item>@string/pref_sort_default_value</item>
+        <item>@string/pref_sort_alpha_value</item>
+        <item>@string/pref_sort_revAlpha_value</item>
+    </string-array>
+</resources>
