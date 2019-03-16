@@ -134,5 +134,4 @@ public class SWSearchResultsActivity extends AppCompatActivity implements SWSear
     public void onSearchVehicleClick(SWVehicle vehicle) {
         Log.d(TAG, "go to " + vehicle.name + "'s page");
     }
-
 }

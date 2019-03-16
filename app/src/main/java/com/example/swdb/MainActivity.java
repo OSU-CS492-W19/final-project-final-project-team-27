@@ -30,14 +30,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
-//
-//    private RecyclerView mSearchResultsRV;
-    private EditText mSearchBoxET;
-//    private TextView mLoadingErrorTV;
-//    private ProgressBar mLoadingPB;
 
-//    private SWSearchAdapter mSWSearchAdapter;
-//    private SWSearchViewModel mViewModel;
+    private EditText mSearchBoxET;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,41 +46,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spin_adapter.setDropDownViewResource(R.layout.spinner_item);
         spinner.setAdapter(spin_adapter);
         spinner.setOnItemSelectedListener(this);
-//        mSearchResultsRV = findViewById(R.id.rv_search_results);
-//        mLoadingErrorTV = findViewById(R.id.tv_loading_error);
-//        mLoadingPB = findViewById(R.id.pb_loading);
-
-//        mSearchResultsRV.setLayoutManager(new LinearLayoutManager(this));
-//        mSearchResultsRV.setHasFixedSize(true);
-//
-//        mSWSearchAdapter = new SWSearchAdapter(this);
-//        mSearchResultsRV.setAdapter(mSWSearchAdapter);
-
-//        mViewModel = ViewModelProviders.of(this).get(SWSearchViewModel.class);
-//
-//        mViewModel.getPeopleResults().observe(this, new Observer<List<SWPerson>>() {
-//            @Override
-//            public void onChanged(@Nullable List<SWPerson> people) {
-//                mSWSearchAdapter.updateSearchResults(people);
-//            }
-//        });
-//
-//        mViewModel.getLoadingStatus().observe(this, new Observer<Status>() {
-//            @Override
-//            public void onChanged(@Nullable Status status) {
-//                if (status == Status.LOADING) {
-//                    mLoadingPB.setVisibility(View.VISIBLE);
-//                } else if (status == Status.SUCCESS) {
-//                    mLoadingPB.setVisibility(View.INVISIBLE);
-//                    mSearchResultsRV.setVisibility(View.VISIBLE);
-//                    mLoadingErrorTV.setVisibility(View.INVISIBLE);
-//                } else {
-//                    mLoadingPB.setVisibility(View.INVISIBLE);
-//                    mSearchResultsRV.setVisibility(View.INVISIBLE);
-//                    mLoadingErrorTV.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
 
         Button searchButton = findViewById(R.id.btn_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -117,8 +77,4 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onNothingSelected(AdapterView<?> parent) {
         //do nothing?
     }
-//    @Override
-//    public void onSearchItemClick(SWPerson person) {
-//        Log.d(TAG, "go to " + person.name + "'s page");
-//    }
 }
