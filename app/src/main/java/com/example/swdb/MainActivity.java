@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity
         spin_adapter.setDropDownViewResource(R.layout.spinner_item);
         spinner.setAdapter(spin_adapter);
         spinner.setOnItemSelectedListener(this);
+        SharedPreferences prefs = getSharedPreferences("com.example.swdb", MODE_PRIVATE);
+        spinner.setSelection(prefs.getInt("previousDropdown", 0));
 //        mSearchResultsRV = findViewById(R.id.rv_search_results);
 //        mLoadingErrorTV = findViewById(R.id.tv_loading_error);
 //        mLoadingPB = findViewById(R.id.pb_loading);
@@ -119,6 +121,15 @@ public class MainActivity extends AppCompatActivity
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         //updated sharedpreferences with parent.getSelectedItem().toString().toLowerCase()
         //defines what we're searching for
+        SharedPreferences pref = this.getSharedPreferences("com.example.swdb", this.MODE_PRIVATE);
+        SharedPreferences.Editor edit = pref.edit();
+        edit.putString("searchFor", parent.getSelectedItem().toString().toLowerCase());
+        edit.putInt("previousDropdown", parent.getSelectedItemPosition());
+        edit.apply();
+        //%LOCALAPPDATA%\Android\sdk\platform-tools
+        //adb devices
+        //adb -s <device> shell
+        //run-as com.example.swdb
         Toast.makeText(this, parent.getSelectedItem().toString().toLowerCase(),
                 Toast.LENGTH_SHORT).show();
     }
