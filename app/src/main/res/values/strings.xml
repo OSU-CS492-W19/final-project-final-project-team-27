@@ -5,6 +5,14 @@
     <string name="loading_error">Unable to run query.  Check internet.</string>
     <string name="action_share">Share</string>
 
+    <string-array name="dropdown_types">
+        <item>Person</item>
+        <item>Film</item>
+        <item>Vehicle</item>
+        <item>Planet</item>
+        <item>Species</item>
+        <item>Starship</item>
+    </string-array>
 
     <string name="pref_units_Key" translatable="false">pref_units</string>
     <string name="pref_units_title">Units</string>

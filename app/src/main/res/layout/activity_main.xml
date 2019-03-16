@@ -22,6 +22,12 @@
         android:text="@string/search_button_text"
         android:textSize="22sp"/>
 
+    <Spinner
+        android:id="@+id/dropdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overlapAnchor="false"/>
+
     <!--<FrameLayout-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent">-->

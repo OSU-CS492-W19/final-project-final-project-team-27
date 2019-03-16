@@ -12,10 +12,14 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.swdb.data.SWPerson;
 import com.example.swdb.data.Status;
@@ -23,7 +27,7 @@ import com.example.swdb.utils.SWUtils;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
 //
@@ -41,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mSearchBoxET = findViewById(R.id.et_search_box);
+        Spinner spinner = (Spinner) findViewById(R.id.dropdown);
+        ArrayAdapter<CharSequence> spin_adapter = ArrayAdapter.createFromResource(this,
+                R.array.dropdown_types, R.layout.spinner_item);
+        spin_adapter.setDropDownViewResource(R.layout.spinner_item);
+        spinner.setAdapter(spin_adapter);
+        spinner.setOnItemSelectedListener(this);
 //        mSearchResultsRV = findViewById(R.id.rv_search_results);
 //        mLoadingErrorTV = findViewById(R.id.tv_loading_error);
 //        mLoadingPB = findViewById(R.id.pb_loading);
@@ -93,6 +103,19 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SWSearchResultsActivity.class);
         intent.putExtra(SWUtils.EXTRA_SW_QUERY, query);
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        //updated sharedpreferences with parent.getSelectedItem().toString().toLowerCase()
+        //defines what we're searching for
+        Toast.makeText(this, parent.getSelectedItem().toString().toLowerCase(),
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        //do nothing?
     }
 //    @Override
 //    public void onSearchItemClick(SWPerson person) {
