@@ -18,6 +18,9 @@ public class SWUtils {
     private final static String CATEGORY_STARSHIPS = "starships/";
     private final static String CATEGORY_VEHICLES = "vehicles/";
 
+    public static final String EXTRA_PERSON_ITEM = "com.example.android.swdb.utils.SWPerson";
+
+
     public static class SWPerson implements Serializable {
         public String name;
         public String height;
@@ -118,4 +121,10 @@ public class SWUtils {
             return null;
         }
     }
+
+    public static class SearchDetails implements Serializable {
+        public String search_item_name;
+
+    }
+
 }
