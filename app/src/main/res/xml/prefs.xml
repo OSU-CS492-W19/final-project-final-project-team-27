@@ -16,5 +16,9 @@
         android:entryValues="@array/pref_sort_values"
         android:defaultValue="@string/pref_sort_original_value"
         android:summary="%s"/>
+    <SwitchPreference
+        android:key="@string/pref_theme_key"
+        android:title="@string/pref_theme_title"
+        android:defaultValue="@bool/pref_theme_default_value"/>
 
 </PreferenceScreen>
