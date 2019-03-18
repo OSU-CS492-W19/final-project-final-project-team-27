@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_share"
-        android:title="@string/action_share"
+        android:id="@+id/action_images"
+        android:title="@string/action_images"
         app:showAsAction="ifRoom" />
 
     <!--android:icon="@drawable/ic_action_share"-->

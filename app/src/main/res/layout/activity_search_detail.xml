@@ -4,51 +4,105 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/iv_weather_icon"
-        android:padding="4dp"
-        android:layout_width="128dp"
-        android:layout_height="128dp" />
+    <!--<ImageView-->
+        <!--android:id="@+id/iv_weather_icon"-->
+        <!--android:padding="4dp"-->
+        <!--android:layout_width="128dp"-->
+        <!--android:layout_height="128dp" />-->
 
+    <!--<TextView-->
+        <!--android:id="@+id/tv_date"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:padding="4dp"-->
+        <!--android:layout_marginLeft="12dp"-->
+        <!--android:textSize="24sp"-->
+        <!--android:textColor="#000"/>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_temp_description"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:padding="4dp"-->
+        <!--android:layout_marginLeft="12dp"-->
+        <!--android:textSize="24sp" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_low_high_temp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:padding="4dp"-->
+        <!--android:layout_marginLeft="12dp"-->
+        <!--android:textSize="18sp" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_wind"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:padding="4dp"-->
+        <!--android:layout_marginLeft="12dp"-->
+        <!--android:textSize="18sp" />-->
     <TextView
-        android:id="@+id/tv_date"
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:layout_marginLeft="12dp"
-        android:textSize="24sp"
-        android:textColor="#000"/>
-
+        android:padding="16dp"
+        android:textSize="32sp" />
     <TextView
-        android:id="@+id/tv_temp_description"
+        android:id="@+id/tv_height"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="4dp"
         android:layout_marginLeft="12dp"
         android:textSize="24sp" />
-
     <TextView
-        android:id="@+id/tv_low_high_temp"
+        android:id="@+id/tv_mass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="4dp"
         android:layout_marginLeft="12dp"
-        android:textSize="18sp" />
-
+        android:textSize="24sp" />
     <TextView
-        android:id="@+id/tv_wind"
+        android:id="@+id/tv_gender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="4dp"
         android:layout_marginLeft="12dp"
-        android:textSize="18sp" />
-
+        android:textSize="24sp" />
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_hair"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="4dp"
         android:layout_marginLeft="12dp"
-        android:textSize="18sp" />
+        android:textSize="24sp" />
+    <TextView
+        android:id="@+id/tv_skin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:layout_marginLeft="12dp"
+        android:textSize="24sp" />
+    <TextView
+        android:id="@+id/tv_eye"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:layout_marginLeft="12dp"
+        android:textSize="24sp" />
+    <TextView
+        android:id="@+id/tv_birth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:layout_marginLeft="12dp"
+        android:textSize="24sp" />
+    <TextView
+        android:id="@+id/tv_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:layout_marginLeft="12dp"
+        android:textSize="24sp" />
 
 </LinearLayout>
