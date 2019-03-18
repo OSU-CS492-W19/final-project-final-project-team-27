@@ -152,5 +152,4 @@ public class SWSearchResultsActivity extends AppCompatActivity implements SWSear
         intent.putExtra(SWVehicle.EXTRA_VEH_ITEM, vehicle);
         startActivity(intent);
     }
-
 }

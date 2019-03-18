@@ -7,15 +7,11 @@ import android.util.Log;
 
 import com.example.swdb.utils.SWUtils;
 
-import java.util.List;
-
 public class SWSearchRepository implements SWSearchAsyncTask.Callback {
 
     private final static String TAG = SWSearchRepository.class.getSimpleName();
 
     private MutableLiveData<SWSearchResult> mResults;
-    private MutableLiveData<List<SWPerson>> mPeople;
-    private MutableLiveData<List<SWFilm>> mFilms;
     private MutableLiveData<Status> mLoadingStatus;
 
     private String mCurrentQuery;
@@ -23,12 +19,6 @@ public class SWSearchRepository implements SWSearchAsyncTask.Callback {
     public SWSearchRepository() {
         mResults = new MutableLiveData<>();
         mResults.setValue(null);
-
-        mPeople = new MutableLiveData<>();
-        mPeople.setValue(null);
-
-        mFilms = new MutableLiveData<>();
-        mFilms.setValue(null);
 
         mLoadingStatus = new MutableLiveData<>();
         mLoadingStatus.setValue(Status.SUCCESS);
@@ -40,14 +30,6 @@ public class SWSearchRepository implements SWSearchAsyncTask.Callback {
         return mResults;
     }
 
-    public LiveData<List<SWPerson>> getPeopleResults() {
-        return mPeople;
-    }
-
-    public LiveData<List<SWFilm>> getFilmResults() {
-        return mFilms;
-    }
-
     public MutableLiveData<Status> getLoadingStatus() {
         return mLoadingStatus;
     }
@@ -55,8 +37,6 @@ public class SWSearchRepository implements SWSearchAsyncTask.Callback {
     public void loadSearchResults(String query) {
         if (shouldExecuteSearch(query)) {
             mCurrentQuery = query;
-            mPeople.setValue(null);
-            mFilms.setValue(null);
             mLoadingStatus.setValue(Status.LOADING);
             String url = SWUtils.buildSWSearchURL(query);
             Log.d(TAG, "querying search URL: " + url);
@@ -73,7 +53,6 @@ public class SWSearchRepository implements SWSearchAsyncTask.Callback {
     @Override
     public void onSearchFinished(SWSearchResult results ) {
         mResults.setValue(results);
-        mPeople.setValue(results.people);
         if (results != null) {
             mLoadingStatus.setValue(Status.SUCCESS);
         } else {
