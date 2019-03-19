@@ -15,14 +15,17 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".SWSearchResultsActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppThemeLightSide">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>
 
         </activity>
       
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppThemeLightSide">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,53 +34,62 @@
         </activity>
 
         <activity
+            android:name="com.example.swdb.SettingsActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppThemeLightSide">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+        <activity
             android:name=".SearchDetailedActivity"
-            android:parentActivityName=".SWSearchResultsActivity">
+            android:parentActivityName=".SWSearchResultsActivity"
+            android:theme="@style/AppThemeLightSide">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SWSearchResultsActivity" />
         </activity>
         <activity
             android:name=".PlanetsDetailedActivity"
-            android:parentActivityName=".SWSearchResultsActivity">
+            android:parentActivityName=".SWSearchResultsActivity"
+            android:theme="@style/AppThemeLightSide">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SWSearchResultsActivity" />
         </activity>
         <activity
             android:name=".SpeciesDetailedActivity"
-            android:parentActivityName=".SWSearchResultsActivity">
+            android:parentActivityName=".SWSearchResultsActivity"
+            android:theme="@style/AppThemeLightSide">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SWSearchResultsActivity" />
         </activity>
         <activity
             android:name=".StarshipsDetailedActivity"
-            android:parentActivityName=".SWSearchResultsActivity">
+            android:parentActivityName=".SWSearchResultsActivity"
+            android:theme="@style/AppThemeLightSide">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SWSearchResultsActivity" />
         </activity>
         <activity
             android:name=".VehiclesDetailedActivity"
-            android:parentActivityName=".SWSearchResultsActivity">
+            android:parentActivityName=".SWSearchResultsActivity"
+            android:theme="@style/AppThemeLightSide">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SWSearchResultsActivity" />
         </activity>
         <activity
             android:name=".FilmDetailedActivity"
-            android:parentActivityName=".SWSearchResultsActivity">
+            android:parentActivityName=".SWSearchResultsActivity"
+            android:theme="@style/AppThemeLightSide">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SWSearchResultsActivity" />
-        </activity>
-        <activity
-            android:name="com.example.swdb.SettingsActivity"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+>>>>>>>>> Temporary merge branch 2
         </activity>
     </application>
 

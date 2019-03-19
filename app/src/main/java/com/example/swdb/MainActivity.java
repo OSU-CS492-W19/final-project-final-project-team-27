@@ -11,8 +11,11 @@ import android.support.v7.preference.PreferenceManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +23,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -60,6 +65,17 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Resources res = getResources();
+        boolean theme = preferences.getBoolean(getString(R.string.pref_theme_key),res.getBoolean(R.bool.pref_theme_default_value));
+        if(theme){
+            setTheme(R.style.AppThemeDarkSide);
+        }
+        else{
+            setTheme(R.style.AppThemeLightSide);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -113,8 +129,8 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
         SharedPreferences prefs = getSharedPreferences("com.example.swdb", MODE_PRIVATE);
         spinner.setSelection(prefs.getInt("previousDropdown", 0));
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+       // Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
         Button searchButton = findViewById(R.id.btn_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -146,15 +162,8 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
                 }
             }
         });
-//                Bundle loaderArgs = new Bundle();
-//                loaderArgs.putString(SEARCH_URL_KEY, mRecentSearchItem1.search_item_name);
-
-        //mLoadingIndicatorPB.setVisibility(View.VISIBLE);
-        //getSupportLoaderManager().restartLoader(RECENT_SEARCH_LOADER_ID, loaderArgs, this);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences.registerOnSharedPreferenceChangeListener(this);
     }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -207,14 +216,42 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
         doSWSearch(search.search_item_name);
 
     }
-
 //    @Override
 //    public void onSearchItemClick(SWPerson person) {
 //        Log.d(TAG, "go to " + person.name + "'s page");
 //    }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        //Do Something?
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.pref_theme_key))) {
+            /*Resources res = getResources();
+            boolean theme = sharedPreferences.getBoolean(getString(R.string.pref_theme_key),res.getBoolean(R.bool.pref_theme_default_value));
+            if(theme){
+                setTheme(R.style.AppThemeDarkSide);
+            }
+            else{
+                setTheme(R.style.AppThemeLightSide);
+            }
+            this.recreate();*/
+        }
+    }
+
+
 }
