@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(getString(R.string.pref_theme_key))) {
-            Resources res = getResources();
+            /*Resources res = getResources();
             boolean theme = sharedPreferences.getBoolean(getString(R.string.pref_theme_key),res.getBoolean(R.bool.pref_theme_default_value));
             if(theme){
                 setTheme(R.style.AppThemeDarkSide);
@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
             else{
                 setTheme(R.style.AppThemeLightSide);
             }
-            this.recreate();
+            this.recreate();*/
         }
     }
 
