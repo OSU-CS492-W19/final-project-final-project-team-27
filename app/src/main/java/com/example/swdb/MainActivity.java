@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
             mRecentSearchAdapter.updateSearchResults(mRecentSearchArray);
         }
 
-        Spinner spinner = (Spinner) findViewById(R.id.dropdown);
+        Spinner spinner = findViewById(R.id.dropdown);
         ArrayAdapter<CharSequence> spin_adapter = ArrayAdapter.createFromResource(this,
                 R.array.dropdown_types, R.layout.spinner_item);
         spin_adapter.setDropDownViewResource(R.layout.spinner_item);
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         //updated sharedpreferences with parent.getSelectedItem().toString().toLowerCase()
         //defines what we're searching for
-        SharedPreferences pref = this.getSharedPreferences("com.example.swdb", this.MODE_PRIVATE);
+        SharedPreferences pref = this.getSharedPreferences("com.example.swdb", MODE_PRIVATE);
         SharedPreferences.Editor edit = pref.edit();
         edit.putString("searchFor", parent.getSelectedItem().toString().toLowerCase());
         edit.putInt("previousDropdown", parent.getSelectedItemPosition());
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
         //adb devices
         //adb -s <device> shell
         //run-as com.example.swdb
-        Toast.makeText(this, parent.getSelectedItem().toString().toLowerCase(),
+        Toast.makeText(this, pref.getString("searchFor", "person"),
                 Toast.LENGTH_SHORT).show();
     }
 
