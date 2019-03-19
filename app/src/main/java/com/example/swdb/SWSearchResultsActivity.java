@@ -108,31 +108,48 @@ public class SWSearchResultsActivity extends AppCompatActivity implements SWSear
     @Override
     public void onSearchFilmClick(SWFilm film) {
         Log.d(TAG, "go to " + film.title + "'s page");
+        Intent intent = new Intent(this, FilmDetailedActivity.class);
+        intent.putExtra(SWFilm.EXTRA_FILM_ITEM, film);
+        startActivity(intent);
     }
 
     @Override
     public void onSearchPersonClick(SWPerson person) {
         Log.d(TAG, "go to " + person.name + "'s page");
+        Intent intent = new Intent(this, SearchDetailedActivity.class);
+        intent.putExtra(SWPerson.EXTRA_PERSON_ITEM, person);
+        startActivity(intent);
     }
 
     @Override
     public void onSearchPlanetClick(SWPlanet planet) {
         Log.d(TAG, "go to " + planet.name + "'s page");
+        Intent intent = new Intent(this, PlanetsDetailedActivity.class);
+        intent.putExtra(SWPlanet.EXTRA_PLANET_ITEM, planet);
+        startActivity(intent);
     }
 
     @Override
     public void onSearchSpeciesClick(SWSpecies species) {
         Log.d(TAG, "go to " + species.name + "'s page");
+        Intent intent = new Intent(this, SpeciesDetailedActivity.class);
+        intent.putExtra(SWSpecies.EXTRA_SPECIES_ITEM, species);
+        startActivity(intent);
     }
 
     @Override
     public void onSearchStarshipClick(SWStarship starship) {
         Log.d(TAG, "go to " + starship.name + "'s page");
+        Intent intent = new Intent(this, StarshipsDetailedActivity.class);
+        intent.putExtra(SWStarship.EXTRA_SHIP_ITEM, starship);
+        startActivity(intent);
     }
 
     @Override
     public void onSearchVehicleClick(SWVehicle vehicle) {
         Log.d(TAG, "go to " + vehicle.name + "'s page");
+        Intent intent = new Intent(this, VehiclesDetailedActivity.class);
+        intent.putExtra(SWVehicle.EXTRA_VEH_ITEM, vehicle);
+        startActivity(intent);
     }
-
 }

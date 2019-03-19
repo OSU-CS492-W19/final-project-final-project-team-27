@@ -26,6 +26,22 @@ public class SWUtils {
     private final static String CATEGORY_STARSHIPS = "starships";
     private final static String CATEGORY_VEHICLES = "vehicles";
 
+    //public static final String EXTRA_PERSON_ITEM = "com.example.android.swdb.utils.SWPerson";
+
+
+//    public static class SWPerson implements Serializable {
+//        public String name;
+//        public String height;
+//        public String mass;
+//        public String hair_color;
+//        public String skin_color;
+//        public String eye_color;
+//        public String birth_year;
+//        public String gender;
+//        public String homeworld;
+//        public SWFilm[] films;
+//        public SWSpecies[] species;
+//    }
     public static final String EXTRA_SW_QUERY = "String";
 
     public static final String SEARCH_PREF = CATEGORY_SPECIES;
@@ -121,4 +137,10 @@ public class SWUtils {
         }
         return swSearchResult;
     }
+
+    public static class SearchDetails implements Serializable {
+        public String search_item_name;
+
+    }
+
 }

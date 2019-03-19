@@ -1,5 +1,13 @@
 package com.example.swdb;
 
+import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -32,23 +40,32 @@ import com.example.swdb.data.SWPerson;
 import com.example.swdb.data.Status;
 import com.example.swdb.utils.SWUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
-        implements AdapterView.OnItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener{
+public class MainActivity extends AppCompatActivity implements RecentSearchAdapter.OnSearchItemClickListener, AdapterView.OnItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
-//
-//    private RecyclerView mSearchResultsRV;
+
     private EditText mSearchBoxET;
+    private RecyclerView mRecentSearchesRV;
+    private RecentSearchAdapter mRecentSearchAdapter;
+
+
+    private SWUtils.SearchDetails[] mRecentSearchArray;
+    private SWUtils.SearchDetails mRecentSearchItem1;
+    private SWUtils.SearchDetails mRecentSearchItem2;
+    private SWUtils.SearchDetails mRecentSearchItem3;
+
+    private String savedStateValue;
+
+
 //    private TextView mLoadingErrorTV;
 //    private ProgressBar mLoadingPB;
 
-//    private SWSearchAdapter mSWSearchAdapter;
-//    private SWSearchViewModel mViewModel;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Resources res = getResources();
         boolean theme = preferences.getBoolean(getString(R.string.pref_theme_key),res.getBoolean(R.bool.pref_theme_default_value));
@@ -58,51 +75,57 @@ public class MainActivity extends AppCompatActivity
         else{
             setTheme(R.style.AppThemeLightSide);
         }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mSearchBoxET = findViewById(R.id.et_search_box);
+        mRecentSearchesRV = findViewById(R.id.rv_search_results);
+
+        mRecentSearchesRV.setLayoutManager(new LinearLayoutManager(this));
+        mRecentSearchesRV.setHasFixedSize(true);
+
+        mRecentSearchAdapter = new RecentSearchAdapter(this);
+        mRecentSearchesRV.setAdapter(mRecentSearchAdapter);
+
+        //String searchQuery = mSearchBoxET.getText().toString();
+        mRecentSearchItem1 = new SWUtils.SearchDetails();
+        mRecentSearchItem2 = new SWUtils.SearchDetails();
+        mRecentSearchItem3 = new SWUtils.SearchDetails();
+
+
+        mRecentSearchArray = new SWUtils.SearchDetails[]{mRecentSearchItem1, mRecentSearchItem2, mRecentSearchItem3};
+
+        if (savedInstanceState != null) {
+
+            String[] getsavedrecents = new String[]{"", "", ""};
+            getsavedrecents = savedInstanceState.getStringArray("savedStateKEY");
+
+
+            if (getsavedrecents[0] != null)
+                mRecentSearchItem1.search_item_name = getsavedrecents[0];
+            mRecentSearchArray[0].search_item_name = getsavedrecents[0];
+
+
+            if (getsavedrecents[1] != null)
+                mRecentSearchItem2.search_item_name = getsavedrecents[1];
+            mRecentSearchArray[1].search_item_name = getsavedrecents[1];
+
+
+            if (getsavedrecents[2] != null)
+                mRecentSearchItem3.search_item_name = getsavedrecents[2];
+            mRecentSearchArray[2].search_item_name = getsavedrecents[2];
+
+
+            mRecentSearchAdapter.updateSearchResults(mRecentSearchArray);
+        }
+
         Spinner spinner = (Spinner) findViewById(R.id.dropdown);
         ArrayAdapter<CharSequence> spin_adapter = ArrayAdapter.createFromResource(this,
                 R.array.dropdown_types, R.layout.spinner_item);
         spin_adapter.setDropDownViewResource(R.layout.spinner_item);
         spinner.setAdapter(spin_adapter);
         spinner.setOnItemSelectedListener(this);
-//        mSearchResultsRV = findViewById(R.id.rv_search_results);
-//        mLoadingErrorTV = findViewById(R.id.tv_loading_error);
-//        mLoadingPB = findViewById(R.id.pb_loading);
-
-//        mSearchResultsRV.setLayoutManager(new LinearLayoutManager(this));
-//        mSearchResultsRV.setHasFixedSize(true);
-//
-//        mSWSearchAdapter = new SWSearchAdapter(this);
-//        mSearchResultsRV.setAdapter(mSWSearchAdapter);
-
-//        mViewModel = ViewModelProviders.of(this).get(SWSearchViewModel.class);
-//
-//        mViewModel.getPeopleResults().observe(this, new Observer<List<SWPerson>>() {
-//            @Override
-//            public void onChanged(@Nullable List<SWPerson> people) {
-//                mSWSearchAdapter.updateSearchResults(people);
-//            }
-//        });
-//
-//        mViewModel.getLoadingStatus().observe(this, new Observer<Status>() {
-//            @Override
-//            public void onChanged(@Nullable Status status) {
-//                if (status == Status.LOADING) {
-//                    mLoadingPB.setVisibility(View.VISIBLE);
-//                } else if (status == Status.SUCCESS) {
-//                    mLoadingPB.setVisibility(View.INVISIBLE);
-//                    mSearchResultsRV.setVisibility(View.VISIBLE);
-//                    mLoadingErrorTV.setVisibility(View.INVISIBLE);
-//                } else {
-//                    mLoadingPB.setVisibility(View.INVISIBLE);
-//                    mSearchResultsRV.setVisibility(View.INVISIBLE);
-//                    mLoadingErrorTV.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
 
        // Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
@@ -112,13 +135,46 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 String searchQuery = mSearchBoxET.getText().toString();
+                if (mRecentSearchItem2.search_item_name != null && !mRecentSearchItem2.search_item_name.equals("")) {
+                    mRecentSearchItem3.search_item_name = mRecentSearchItem2.search_item_name;
+                }
+
+                if (mRecentSearchItem1.search_item_name != null && !mRecentSearchItem1.search_item_name.equals("")) {
+                    mRecentSearchItem2.search_item_name = mRecentSearchItem1.search_item_name;
+
+                }
+
+                mRecentSearchItem1.search_item_name = mSearchBoxET.getText().toString();
+
+                mRecentSearchesRV.setVisibility(View.VISIBLE);
+
+                if (savedInstanceState != null) {
+
+                    mRecentSearchAdapter.updateSearchResults(mRecentSearchArray);
+                }
+                mRecentSearchAdapter.updateSearchResults(mRecentSearchArray);
+                //loadrecents();
+
                 if (!TextUtils.isEmpty(searchQuery)) {
                     doSWSearch(searchQuery);
                 }
             }
         });
-
         preferences.registerOnSharedPreferenceChangeListener(this);
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        savedStateValue = mRecentSearchItem1.search_item_name;
+
+        String[] merp = new String[]{"", "", ""};
+
+        merp[0] = mRecentSearchItem1.search_item_name;
+        merp[1] = mRecentSearchItem2.search_item_name;
+        merp[2] = mRecentSearchItem3.search_item_name;
+
+        outState.putStringArray("savedStateKEY", merp);
     }
 
     private void doSWSearch(String query) {
@@ -141,23 +197,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(getString(R.string.pref_theme_key))) {
-            Resources res = getResources();
-            boolean theme = sharedPreferences.getBoolean(getString(R.string.pref_theme_key),res.getBoolean(R.bool.pref_theme_default_value));
-            if(theme){
-                setTheme(R.style.AppThemeDarkSide);
-            }
-            else{
-               setTheme(R.style.AppThemeLightSide);
-            }
-            this.recreate();
-        }
+    public void onSearchItemClick(SWUtils.SearchDetails search) {
+//        Intent intent = new Intent(this, RepoDetailActivity.class);
+//        intent.putExtra(GitHubUtils.EXTRA_GITHUB_REPO, repo);
+//        startActivity(intent);
+        //if (!TextUtils.isEmpty(search)) {
+        doSWSearch(search.search_item_name);
+
     }
 //    @Override
 //    public void onSearchItemClick(SWPerson person) {
 //        Log.d(TAG, "go to " + person.name + "'s page");
 //    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -174,4 +226,21 @@ public class MainActivity extends AppCompatActivity
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.pref_theme_key))) {
+            Resources res = getResources();
+            boolean theme = sharedPreferences.getBoolean(getString(R.string.pref_theme_key),res.getBoolean(R.bool.pref_theme_default_value));
+            if(theme){
+                setTheme(R.style.AppThemeDarkSide);
+            }
+            else{
+                setTheme(R.style.AppThemeLightSide);
+            }
+            this.recreate();
+        }
+    }
+
+
 }

@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="24sp"
+        android:saveEnabled="true"
         android:hint="@string/search_box_hint"/>
 
     <Button
@@ -22,10 +23,53 @@
         android:text="@string/search_button_text"
         android:textSize="22sp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/recent_search_head_text"
+        android:textSize="24sp"
+        android:padding="16dp"/>
+        <!--android:textColor="@color/lightPrimaryDark"/>-->
+        <!--android:background="@color/lightBackground" />-->
+
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_search_results"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:textSize="18sp" />
+
+            <!--android:background="@color/lightBackground" />-->
+
+
     <Spinner
         android:id="@+id/dropdown"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:overlapAnchor="false"/>
+
+
+
+    <TextView
+            android:id="@+id/tv_loading_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:padding="16dp"
+            android:visibility="invisible"
+            android:text="@string/loading_error" />
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="32dp"
+            android:visibility="invisible"/>
+
+    <FrameLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:overlapAnchor="false"/>
 
     <!--<FrameLayout-->

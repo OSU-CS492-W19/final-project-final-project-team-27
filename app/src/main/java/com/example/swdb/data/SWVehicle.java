@@ -14,4 +14,7 @@ public class SWVehicle implements Serializable {
     public String cargo_capacity;
     public String consumables;
     public String vehicle_class;
+
+    public static final String EXTRA_VEH_ITEM = "com.example.android.swdb.data.SWVehicle";
+
 }

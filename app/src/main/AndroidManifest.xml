@@ -11,11 +11,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:theme="@style/AppThemeLightSide"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".SWSearchResultsActivity"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppThemeLightSide">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>
@@ -31,12 +31,46 @@
         </activity>
 
         <activity
-            android:name="com.example.swdb.SettingsActivity"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppThemeLightSide">
+            android:name=".SearchDetailedActivity"
+            android:parentActivityName=".SWSearchResultsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".SWSearchResultsActivity" />
+        </activity>
+        <activity
+            android:name=".PlanetsDetailedActivity"
+            android:parentActivityName=".SWSearchResultsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SWSearchResultsActivity" />
+        </activity>
+        <activity
+            android:name=".SpeciesDetailedActivity"
+            android:parentActivityName=".SWSearchResultsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SWSearchResultsActivity" />
+        </activity>
+        <activity
+            android:name=".StarshipsDetailedActivity"
+            android:parentActivityName=".SWSearchResultsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SWSearchResultsActivity" />
+        </activity>
+        <activity
+            android:name=".VehiclesDetailedActivity"
+            android:parentActivityName=".SWSearchResultsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SWSearchResultsActivity" />
+        </activity>
+        <activity
+            android:name=".FilmDetailedActivity"
+            android:parentActivityName=".SWSearchResultsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SWSearchResultsActivity" />
         </activity>
     </application>
 
