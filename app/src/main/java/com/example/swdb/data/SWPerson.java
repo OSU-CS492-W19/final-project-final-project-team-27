@@ -14,4 +14,7 @@ public class SWPerson implements Serializable {
     public String homeworld;
     public String[] films;
     public String[] species;
+
+    public static final String EXTRA_PERSON_ITEM = "com.example.android.swdb.data.SWPerson";
+
 }

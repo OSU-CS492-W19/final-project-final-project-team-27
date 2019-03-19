@@ -12,4 +12,7 @@ public class SWPlanet implements Serializable {
     public String terrain;
     public String surface_water;
     public String population;
+
+    public static final String EXTRA_PLANET_ITEM = "com.example.android.swdb.data.SWPlanet";
+
 }

@@ -13,4 +13,6 @@ public class SWSpecies implements Serializable {
     public String average_lifespan;
     public String homeworld;
     public String language;
+    public static final String EXTRA_SPECIES_ITEM = "com.example.android.swdb.data.SWSpecies";
+
 }

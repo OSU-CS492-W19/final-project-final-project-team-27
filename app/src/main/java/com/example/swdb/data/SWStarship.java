@@ -16,4 +16,7 @@ public class SWStarship implements Serializable {
     public String hyperdrive_rating;
     public String MGLT;
     public String starship_class;
+
+    public static final String EXTRA_SHIP_ITEM = "com.example.android.swdb.data.SWStarship";
+
 }

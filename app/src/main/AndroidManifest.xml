@@ -29,6 +29,49 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".SearchDetailedActivity"
+            android:parentActivityName=".SWSearchResultsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SWSearchResultsActivity" />
+        </activity>
+        <activity
+            android:name=".PlanetsDetailedActivity"
+            android:parentActivityName=".SWSearchResultsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SWSearchResultsActivity" />
+        </activity>
+        <activity
+            android:name=".SpeciesDetailedActivity"
+            android:parentActivityName=".SWSearchResultsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SWSearchResultsActivity" />
+        </activity>
+        <activity
+            android:name=".StarshipsDetailedActivity"
+            android:parentActivityName=".SWSearchResultsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SWSearchResultsActivity" />
+        </activity>
+        <activity
+            android:name=".VehiclesDetailedActivity"
+            android:parentActivityName=".SWSearchResultsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SWSearchResultsActivity" />
+        </activity>
+        <activity
+            android:name=".FilmDetailedActivity"
+            android:parentActivityName=".SWSearchResultsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SWSearchResultsActivity" />
+        </activity>
     </application>
 
 </manifest>

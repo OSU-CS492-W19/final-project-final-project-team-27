@@ -3,7 +3,11 @@
     <string name="search_box_hint">Search...</string>
     <string name="search_button_text">Go</string>
     <string name="loading_error">Unable to run query.  Check internet.</string>
-    <string name="action_share">Share</string>
+    <string name="action_images">Images</string>
+
+    <string name="recent_search_head_text">Recent Searches:</string>
+
+    <string name="search_item_details">%1$s%2$s - %3$s</string>
 
     <string-array name="dropdown_types">
         <item>Person</item>
@@ -32,5 +36,66 @@
     <string name="pref_sort_revAlpha">Z-A</string>
     <string name="pref_sort_revAlpha_value" translatable="false">revAlpha</string>
     <string name="pref_sort_original_value" translatable="false">@string/pref_sort_default_value</string>
+
+    <string name="person_item_mass">Mass: %1$s</string>
+    <string name="person_item_hair">Hair Color: %1$s</string>
+    <string name="person_item_eye">Eye Color: %1$s</string>
+    <string name="person_item_height">Height: %1$s</string>
+    <string name="person_item_skin">Skin Color: %1$s</string>
+    <string name="person_item_birth">Birth Year: %1$s</string>
+    <string name="person_item_gender">Gender: %1$s</string>
+
+
+    <string name="planet_item_rotate">Rotation: %1$s</string>
+    <string name="planet_item_orbit">Orbit: %1$s</string>
+    <string name="planet_item_diam">Diameter: %1$s</string>
+    <string name="planet_item_clim">Climate: %1$s</string>
+    <string name="planet_item_grav">Gravity: %1$s</string>
+    <string name="planet_item_terr">Terrain: %1$s</string>
+    <string name="planet_item_water">Surface Water: %1$s</string>
+    <string name="planet_item_pop">Population: %1$s</string>
+
+    <string name="spec_item_class">Classification: %1$s</string>
+    <string name="spec_item_des">Designation: %1$s</string>
+    <string name="spec_item_high">Average Height: %1$s</string>
+    <string name="spec_item_skin">Skin Colors: %1$s</string>
+    <string name="spec_item_hair">Hair Colors: %1$s</string>
+    <string name="spec_item_eye">Eye Colors: %1$s</string>
+    <string name="spec_item_life">Average Lifespan: %1$s</string>
+    <string name="spec_item_home">Homeworld: %1$s</string>
+    <string name="spec_item_lang">Language: %1$s</string>
+
+
+    <string name="ship_item_model">Model: %1$s</string>
+    <string name="ship_item_manu">Manufacturer: %1$s</string>
+    <string name="ship_item_cost">Cost in Credits: %1$s</string>
+    <string name="ship_item_length">Length: %1$s</string>
+    <string name="ship_item_speed">Max Atmosphering Speed: %1$s</string>
+    <string name="ship_item_crew">Crew: %1$s</string>
+    <string name="ship_item_pass">Passengers: %1$s</string>
+    <string name="ship_item_cargo">Cargo Capacity: %1$s</string>
+    <string name="ship_item_consum">Consumables: %1$s</string>
+    <string name="ship_item_hyper">Hyperdrive Rating: %1$s</string>
+    <string name="ship_item_mglt">MGLT: %1$s</string>
+    <string name="ship_item_class">Class: %1$s</string>
+
+
+    <string name="vehic_item_model">Model: %1$s</string>
+    <string name="vehic_item_manu">Manufacturer: %1$s</string>
+    <string name="vehic_item_cost">Cost in Credits: %1$s</string>
+    <string name="vehic_item_length">Length: %1$s</string>
+    <string name="vehic_item_speed">Max Atmosphering Speed: %1$s</string>
+    <string name="vehic_item_crew">Crew: %1$s</string>
+    <string name="vehic_item_pass">Passengers: %1$s</string>
+    <string name="vehic_item_cargo">Cargo Capacity: %1$s</string>
+    <string name="vehic_item_consum">Consumables: %1$s</string>
+    <string name="vehic_item_class">Class: %1$s</string>
+
+
+    <string name="film_item_episode">Episode: %1$s</string>
+    <string name="film_item_director">Director: %1$s</string>
+    <string name="film_item_producer">Producer: %1$s</string>
+    <string name="film_item_release">Release Date: %1$s</string>
+
 
 </resources>

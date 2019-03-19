@@ -9,4 +9,7 @@ public class SWFilm implements Serializable {
     public String director;
     public String producer;
     public String release_date;
+
+    public static final String EXTRA_FILM_ITEM = "com.example.android.swdb.data.SWFilm";
+
 }
