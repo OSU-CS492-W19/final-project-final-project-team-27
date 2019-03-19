@@ -19,6 +19,7 @@ import com.example.swdb.utils.SWUtils;
 public class SWSearchAdapter extends RecyclerView.Adapter<SWSearchAdapter.SearchResultViewHolder> {
     private SWSearchResult mResults;
     OnSearchItemClickListener mSearchItemClickListener;
+    private String mCategory;
 
     public interface OnSearchItemClickListener {
         void onSearchFilmClick(SWFilm person);
@@ -33,7 +34,8 @@ public class SWSearchAdapter extends RecyclerView.Adapter<SWSearchAdapter.Search
         mSearchItemClickListener = searchItemClickListener;
     }
 
-    public void updateSearchResults(SWSearchResult results) {
+    public void updateSearchResults(SWSearchResult results, String category) {
+        mCategory = category;
         mResults = results;
         notifyDataSetChanged();
     }
@@ -41,7 +43,7 @@ public class SWSearchAdapter extends RecyclerView.Adapter<SWSearchAdapter.Search
     @Override
     public int getItemCount() {
         if (mResults != null) {
-            switch (SWUtils.SEARCH_PREF) {
+            switch (mCategory) {
                 case "films":
                     return mResults.films.size();
                 case "people":
@@ -71,7 +73,7 @@ public class SWSearchAdapter extends RecyclerView.Adapter<SWSearchAdapter.Search
 
     @Override
     public void onBindViewHolder(@NonNull SearchResultViewHolder holder, int pos) {
-        switch (SWUtils.SEARCH_PREF) {
+        switch (mCategory) {
             case "films":
                 holder.bindFilm(mResults.films.get(pos));
                 break;
@@ -105,7 +107,7 @@ public class SWSearchAdapter extends RecyclerView.Adapter<SWSearchAdapter.Search
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                switch (SWUtils.SEARCH_PREF) {
+                switch (mCategory) {
                     case "films":
                         SWFilm film = mResults.films.get(getAdapterPosition());
                         mSearchItemClickListener.onSearchFilmClick(film);

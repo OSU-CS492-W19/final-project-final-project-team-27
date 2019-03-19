@@ -10,12 +10,12 @@
     <string name="search_item_details">%1$s%2$s - %3$s</string>
 
     <string-array name="dropdown_types">
-        <item>Person</item>
-        <item>Film</item>
-        <item>Vehicle</item>
-        <item>Planet</item>
+        <item>People</item>
+        <item>Films</item>
+        <item>Vehicles</item>
+        <item>Planets</item>
         <item>Species</item>
-        <item>Starship</item>
+        <item>Starships</item>
     </string-array>
 
     <string name="pref_units_Key" translatable="false">pref_units</string>

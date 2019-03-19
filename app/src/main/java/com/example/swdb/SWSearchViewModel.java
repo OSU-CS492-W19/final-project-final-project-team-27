@@ -27,7 +27,7 @@ public class SWSearchViewModel extends ViewModel {
         return mLoadingStatus;
     }
 
-    public void loadSearchResults(String query) {
-        mRepository.loadSearchResults(query);
+    public void loadSearchResults(String query, String category) {
+        mRepository.loadSearchResults(query, category);
     }
 }

@@ -1,6 +1,9 @@
 package com.example.swdb.utils;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.example.swdb.data.SWFilm;
 import com.example.swdb.data.SWPerson;
@@ -70,20 +73,21 @@ public class SWUtils {
         public ArrayList<SWVehicle> results;
     }
 
-    public static String buildSWSearchURL(String query) {
+    public static String buildSWSearchURL(String query, String category) {
+        Log.d("Search", category);
         return Uri.parse(SW_SEARCH_BASE_URL).buildUpon()
-                .appendEncodedPath(SEARCH_PREF)
+                .appendEncodedPath(category)
                 .appendQueryParameter(SW_SEARCH_QUERY_PARAM, query)
                 .appendQueryParameter(SW_SEARCH_FORMAT_PARAM, SW_SEARCH_FORMAT_VALUE)
                 .build()
                 .toString();
     }
 
-    public static SWSearchResult parseSWSearchResults(String json) {
+    public static SWSearchResult parseSWSearchResults(String json, String category) {
         Gson gson = new Gson();
         SWSearchResult swSearchResult = new SWSearchResult();
 
-        switch (SEARCH_PREF) {
+        switch (category) {
             case CATEGORY_FILMS:
                 SWFilmsResults filmResults = gson.fromJson(json, SWFilmsResults.class);
                 if (filmResults != null && filmResults.results != null) {
