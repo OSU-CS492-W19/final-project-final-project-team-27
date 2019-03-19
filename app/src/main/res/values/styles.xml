@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppThemeLightSide" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeLightSide" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/lightPrimary</item>
         <item name="android:colorBackground">@color/lightBackground</item>
@@ -9,7 +9,7 @@
         <item name="colorButtonNormal">@color/lightAccent</item>
     </style>
 
-    <style name="AppThemeDarkSide" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeDarkSide" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/darkPrimary</item>
         <item name="android:colorBackground">@color/darkPrimaryBackground</item>

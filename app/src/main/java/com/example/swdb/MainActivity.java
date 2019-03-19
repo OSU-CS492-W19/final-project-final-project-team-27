@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -37,10 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements RecentSearchAdapter.OnSearchItemClickListener, AdapterView.OnItemSelectedListener {
-
-
-//public class MainActivity extends AppCompatActivity implements {
+public class MainActivity extends AppCompatActivity implements RecentSearchAdapter.OnSearchItemClickListener, AdapterView.OnItemSelectedListener , SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -112,6 +110,11 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
         spin_adapter.setDropDownViewResource(R.layout.spinner_item);
         spinner.setAdapter(spin_adapter);
         spinner.setOnItemSelectedListener(this);
+        SharedPreferences prefs = getSharedPreferences("com.example.swdb", MODE_PRIVATE);
+        spinner.setSelection(prefs.getInt("previousDropdown", 0));
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         Button searchButton = findViewById(R.id.btn_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -148,6 +151,8 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
 
         //mLoadingIndicatorPB.setVisibility(View.VISIBLE);
         //getSupportLoaderManager().restartLoader(RECENT_SEARCH_LOADER_ID, loaderArgs, this);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -175,6 +180,15 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         //updated sharedpreferences with parent.getSelectedItem().toString().toLowerCase()
         //defines what we're searching for
+        SharedPreferences pref = this.getSharedPreferences("com.example.swdb", this.MODE_PRIVATE);
+        SharedPreferences.Editor edit = pref.edit();
+        edit.putString("searchFor", parent.getSelectedItem().toString().toLowerCase());
+        edit.putInt("previousDropdown", parent.getSelectedItemPosition());
+        edit.apply();
+        //%LOCALAPPDATA%\Android\sdk\platform-tools
+        //adb devices
+        //adb -s <device> shell
+        //run-as com.example.swdb
         Toast.makeText(this, parent.getSelectedItem().toString().toLowerCase(),
                 Toast.LENGTH_SHORT).show();
     }
@@ -194,7 +208,13 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
 
     }
 
-////    @Override
-////    public void onSearchItemClick(SWPerson person) {
-////        Log.d(TAG, "go to " + person.name + "'s page");
+//    @Override
+//    public void onSearchItemClick(SWPerson person) {
+//        Log.d(TAG, "go to " + person.name + "'s page");
+//    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        //Do Something?
+    }
 }
