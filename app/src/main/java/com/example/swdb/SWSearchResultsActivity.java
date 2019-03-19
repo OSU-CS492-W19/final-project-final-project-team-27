@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
@@ -39,6 +40,8 @@ public class SWSearchResultsActivity extends AppCompatActivity implements SWSear
     private TextView mLoadingErrorTV;
     private ProgressBar mLoadingPB;
     private String mQuery;
+    private String mCategory;
+    private SharedPreferences mPrefs;
 
     private SWSearchAdapter mSWSearchAdapter;
     private SWSearchViewModel mViewModel;
@@ -59,6 +62,9 @@ public class SWSearchResultsActivity extends AppCompatActivity implements SWSear
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
 
+        mPrefs = getSharedPreferences("com.example.swdb", MODE_PRIVATE);
+        mCategory = mPrefs.getString("searchFor", "person");
+
         mSearchBoxET = findViewById(R.id.et_search_box);
         mSearchResultsRV = findViewById(R.id.rv_search_results);
         mLoadingErrorTV = findViewById(R.id.tv_loading_error);
@@ -75,7 +81,7 @@ public class SWSearchResultsActivity extends AppCompatActivity implements SWSear
         mViewModel.getSearchResults().observe(this, new Observer<SWSearchResult>() {
             @Override
             public void onChanged(@Nullable SWSearchResult result) {
-                mSWSearchAdapter.updateSearchResults(result);
+                mSWSearchAdapter.updateSearchResults(result, mCategory);
             }
         });
 
@@ -100,7 +106,8 @@ public class SWSearchResultsActivity extends AppCompatActivity implements SWSear
         if (intent != null && intent.hasExtra(SWUtils.EXTRA_SW_QUERY)) {
             mQuery = intent.getStringExtra(SWUtils.EXTRA_SW_QUERY);
             mSearchBoxET.setText(mQuery);
-            doSWSearch(mQuery);
+            Log.d(TAG, mCategory);
+            doSWSearch(mQuery, mCategory);
         }
 
         Button searchButton = findViewById(R.id.btn_search);
@@ -109,14 +116,15 @@ public class SWSearchResultsActivity extends AppCompatActivity implements SWSear
             public void onClick(View v) {
                 String searchQuery = mSearchBoxET.getText().toString();
                 if (!TextUtils.isEmpty(searchQuery)) {
-                    doSWSearch(searchQuery);
+                    Log.d(TAG, mCategory);
+                    doSWSearch(searchQuery, mCategory);
                 }
             }
         });
     }
 
-    private void doSWSearch(String query) {
-        mViewModel.loadSearchResults(query);
+    private void doSWSearch(String query, String category) {
+        mViewModel.loadSearchResults(query, category);
     }
 
     @Override

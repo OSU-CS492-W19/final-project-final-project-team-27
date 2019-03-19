@@ -3,22 +3,20 @@
     <string name="search_box_hint">Search...</string>
     <string name="search_button_text">Go</string>
     <string name="loading_error">Unable to run query.  Check internet.</string>
-    <string name="action_share">Share</string>
-    <string name="action_settings">Settings</string>
     <string name="action_images">Images</string>
-
+    <string name="action_settings">Settings</string>
     <string name="recent_search_head_text">Recent Searches:</string>
 
     <string name="search_item_details">%1$s%2$s - %3$s</string>
 
 
     <string-array name="dropdown_types">
-        <item>Person</item>
-        <item>Film</item>
-        <item>Vehicle</item>
-        <item>Planet</item>
+        <item>People</item>
+        <item>Films</item>
+        <item>Vehicles</item>
+        <item>Planets</item>
         <item>Species</item>
-        <item>Starship</item>
+        <item>Starships</item>
     </string-array>
 
     <string name="pref_units_Key" translatable="false">pref_units</string>
@@ -104,5 +102,6 @@
     <string name="film_item_producer">Producer: %1$s</string>
     <string name="film_item_release">Release Date: %1$s</string>
 
+>>>>>>>>> Temporary merge branch 2
 
 </resources>

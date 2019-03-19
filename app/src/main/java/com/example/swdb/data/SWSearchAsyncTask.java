@@ -10,14 +10,16 @@ import java.io.IOException;
 public class SWSearchAsyncTask extends AsyncTask<Void, Void, String> {
     private String mURL;
     private Callback mCallback;
+    private String mCategory;
 
     public interface Callback {
         void onSearchFinished(SWSearchResult results);
     }
 
-    public SWSearchAsyncTask(String url, Callback callback) {
+    public SWSearchAsyncTask(String url, String category, Callback callback) {
         mURL = url;
         mCallback = callback;
+        mCategory = category;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class SWSearchAsyncTask extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String s) {
         SWSearchResult results = new SWSearchResult();
         if (s != null) {
-            results = SWUtils.parseSWSearchResults(s);
+            results = SWUtils.parseSWSearchResults(s, mCategory);
         }
         mCallback.onSearchFinished(results);
     }

@@ -18,7 +18,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -43,7 +42,8 @@ import com.example.swdb.utils.SWUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements RecentSearchAdapter.OnSearchItemClickListener, AdapterView.OnItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener{
+
+public class MainActivity extends AppCompatActivity implements RecentSearchAdapter.OnSearchItemClickListener, AdapterView.OnItemSelectedListener , SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -120,12 +120,14 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
             mRecentSearchAdapter.updateSearchResults(mRecentSearchArray);
         }
 
-        Spinner spinner = (Spinner) findViewById(R.id.dropdown);
+        Spinner spinner = findViewById(R.id.dropdown);
         ArrayAdapter<CharSequence> spin_adapter = ArrayAdapter.createFromResource(this,
                 R.array.dropdown_types, R.layout.spinner_item);
         spin_adapter.setDropDownViewResource(R.layout.spinner_item);
         spinner.setAdapter(spin_adapter);
         spinner.setOnItemSelectedListener(this);
+        SharedPreferences prefs = getSharedPreferences("com.example.swdb", MODE_PRIVATE);
+        spinner.setSelection(prefs.getInt("previousDropdown", 0));
 
        // Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
@@ -187,7 +189,16 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         //updated sharedpreferences with parent.getSelectedItem().toString().toLowerCase()
         //defines what we're searching for
-        Toast.makeText(this, parent.getSelectedItem().toString().toLowerCase(),
+        SharedPreferences pref = this.getSharedPreferences("com.example.swdb", MODE_PRIVATE);
+        SharedPreferences.Editor edit = pref.edit();
+        edit.putString("searchFor", parent.getSelectedItem().toString().toLowerCase());
+        edit.putInt("previousDropdown", parent.getSelectedItemPosition());
+        edit.apply();
+        //%LOCALAPPDATA%\Android\sdk\platform-tools
+        //adb devices
+        //adb -s <device> shell
+        //run-as com.example.swdb
+        Toast.makeText(this, pref.getString("searchFor", "person"),
                 Toast.LENGTH_SHORT).show();
     }
 

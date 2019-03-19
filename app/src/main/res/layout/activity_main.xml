@@ -23,6 +23,12 @@
         android:text="@string/search_button_text"
         android:textSize="22sp"/>
 
+    <Spinner
+        android:id="@+id/dropdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overlapAnchor="false"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,14 +46,6 @@
             android:textSize="18sp" />
 
             <!--android:background="@color/lightBackground" />-->
-
-
-    <Spinner
-        android:id="@+id/dropdown"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:overlapAnchor="false"/>
-
 
 
     <TextView

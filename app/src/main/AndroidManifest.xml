@@ -89,6 +89,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SWSearchResultsActivity" />
+>>>>>>>>> Temporary merge branch 2
         </activity>
     </application>
 
