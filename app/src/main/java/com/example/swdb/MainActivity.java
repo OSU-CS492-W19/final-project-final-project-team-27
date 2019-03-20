@@ -43,7 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements RecentSearchAdapter.OnSearchItemClickListener, AdapterView.OnItemSelectedListener , SharedPreferences.OnSharedPreferenceChangeListener {
+public class MainActivity extends AppCompatActivity implements RecentSearchAdapter.OnSearchItemClickListener, AdapterView.OnItemSelectedListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -51,22 +51,18 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
     private RecyclerView mRecentSearchesRV;
     private RecentSearchAdapter mRecentSearchAdapter;
 
-
-    private SWUtils.SearchDetails[] mRecentSearchArray;
-    private SWUtils.SearchDetails mRecentSearchItem1;
-    private SWUtils.SearchDetails mRecentSearchItem2;
-    private SWUtils.SearchDetails mRecentSearchItem3;
-
-    private String savedStateValue;
-
+    private String mRecentSearchItem1 = "";
+    private String mRecentSearchItem2 = "";
+    private String mRecentSearchItem3 = "";
+    private String[] mRecentSearchArray = new String[]{mRecentSearchItem1,mRecentSearchItem2,mRecentSearchItem3};
 
 //    private TextView mLoadingErrorTV;
 //    private ProgressBar mLoadingPB;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
         Resources res = getResources();
         boolean theme = preferences.getBoolean(getString(R.string.pref_theme_key),res.getBoolean(R.bool.pref_theme_default_value));
         if(theme){
@@ -88,34 +84,22 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
         mRecentSearchAdapter = new RecentSearchAdapter(this);
         mRecentSearchesRV.setAdapter(mRecentSearchAdapter);
 
-        //String searchQuery = mSearchBoxET.getText().toString();
-        mRecentSearchItem1 = new SWUtils.SearchDetails();
-        mRecentSearchItem2 = new SWUtils.SearchDetails();
-        mRecentSearchItem3 = new SWUtils.SearchDetails();
-
-
-        mRecentSearchArray = new SWUtils.SearchDetails[]{mRecentSearchItem1, mRecentSearchItem2, mRecentSearchItem3};
-
         if (savedInstanceState != null) {
 
-            String[] getsavedrecents = new String[]{"", "", ""};
+            String[] getsavedrecents;
             getsavedrecents = savedInstanceState.getStringArray("savedStateKEY");
 
-
             if (getsavedrecents[0] != null)
-                mRecentSearchItem1.search_item_name = getsavedrecents[0];
-            mRecentSearchArray[0].search_item_name = getsavedrecents[0];
-
+                mRecentSearchItem1 = getsavedrecents[0];
+            mRecentSearchArray[0] = getsavedrecents[0];
 
             if (getsavedrecents[1] != null)
-                mRecentSearchItem2.search_item_name = getsavedrecents[1];
-            mRecentSearchArray[1].search_item_name = getsavedrecents[1];
-
+                mRecentSearchItem2 = getsavedrecents[1];
+            mRecentSearchArray[1] = getsavedrecents[1];
 
             if (getsavedrecents[2] != null)
-                mRecentSearchItem3.search_item_name = getsavedrecents[2];
-            mRecentSearchArray[2].search_item_name = getsavedrecents[2];
-
+                mRecentSearchItem3 = getsavedrecents[2];
+            mRecentSearchArray[2] = getsavedrecents[2];
 
             mRecentSearchAdapter.updateSearchResults(mRecentSearchArray);
         }
@@ -132,26 +116,38 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
        // Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
+        mRecentSearchAdapter.updateSearchResults(mRecentSearchArray);
+
         Button searchButton = findViewById(R.id.btn_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String searchQuery = mSearchBoxET.getText().toString();
-                if (mRecentSearchItem2.search_item_name != null && !mRecentSearchItem2.search_item_name.equals("")) {
-                    mRecentSearchItem3.search_item_name = mRecentSearchItem2.search_item_name;
+
+                if (mRecentSearchItem2 != null && !mRecentSearchItem2.equals("")) {
+                    mRecentSearchItem3 = mRecentSearchItem2;
                 }
 
-                if (mRecentSearchItem1.search_item_name != null && !mRecentSearchItem1.search_item_name.equals("")) {
-                    mRecentSearchItem2.search_item_name = mRecentSearchItem1.search_item_name;
-
+                if (mRecentSearchItem1 != null && !mRecentSearchItem1.equals("")) {
+                    mRecentSearchItem2 = mRecentSearchItem1;
                 }
 
-                mRecentSearchItem1.search_item_name = mSearchBoxET.getText().toString();
+                mRecentSearchItem1 = searchQuery;
+
+                mRecentSearchArray[0] = mRecentSearchItem1;
+                mRecentSearchArray[1] = mRecentSearchItem2;
+                mRecentSearchArray[2] = mRecentSearchItem3;
+
+                SharedPreferences pref = getSharedPreferences("com.example.swdb", MODE_PRIVATE);
+                SharedPreferences.Editor edit = pref.edit();
+                edit.putString("history1", mRecentSearchItem1);
+                edit.putString("history2", mRecentSearchItem2);
+                edit.putString("history3", mRecentSearchItem3);
+                edit.apply();
 
                 mRecentSearchesRV.setVisibility(View.VISIBLE);
 
                 if (savedInstanceState != null) {
-
                     mRecentSearchAdapter.updateSearchResults(mRecentSearchArray);
                 }
                 mRecentSearchAdapter.updateSearchResults(mRecentSearchArray);
@@ -162,21 +158,26 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
                 }
             }
         });
-        preferences.registerOnSharedPreferenceChangeListener(this);
     }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        SharedPreferences preferences = getSharedPreferences("com.example.swdb", MODE_PRIVATE);
+        mRecentSearchItem1 = preferences.getString("history1","");
+        mRecentSearchItem2 = preferences.getString("history2","");
+        mRecentSearchItem3 = preferences.getString("history3","");
+        mRecentSearchArray[0] = mRecentSearchItem1;
+        mRecentSearchArray[1] = mRecentSearchItem2;
+        mRecentSearchArray[2] = mRecentSearchItem3;
+        mRecentSearchAdapter.updateSearchResults(mRecentSearchArray);
+    }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        savedStateValue = mRecentSearchItem1.search_item_name;
-
-        String[] merp = new String[]{"", "", ""};
-
-        merp[0] = mRecentSearchItem1.search_item_name;
-        merp[1] = mRecentSearchItem2.search_item_name;
-        merp[2] = mRecentSearchItem3.search_item_name;
-
-        outState.putStringArray("savedStateKEY", merp);
+        outState.putStringArray("savedStateKEY", mRecentSearchArray);
     }
 
     private void doSWSearch(String query) {
@@ -198,8 +199,8 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
         //adb devices
         //adb -s <device> shell
         //run-as com.example.swdb
-        Toast.makeText(this, pref.getString("searchFor", "person"),
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, pref.getString("searchFor", "person"),
+//                Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -208,12 +209,12 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
     }
 
     @Override
-    public void onSearchItemClick(SWUtils.SearchDetails search) {
+    public void onSearchItemClick(String search) {
 //        Intent intent = new Intent(this, RepoDetailActivity.class);
 //        intent.putExtra(GitHubUtils.EXTRA_GITHUB_REPO, repo);
 //        startActivity(intent);
         //if (!TextUtils.isEmpty(search)) {
-        doSWSearch(search.search_item_name);
+        doSWSearch(search);
 
     }
 //    @Override
@@ -237,21 +238,4 @@ public class MainActivity extends AppCompatActivity implements RecentSearchAdapt
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(getString(R.string.pref_theme_key))) {
-            /*Resources res = getResources();
-            boolean theme = sharedPreferences.getBoolean(getString(R.string.pref_theme_key),res.getBoolean(R.bool.pref_theme_default_value));
-            if(theme){
-                setTheme(R.style.AppThemeDarkSide);
-            }
-            else{
-                setTheme(R.style.AppThemeLightSide);
-            }
-            this.recreate();*/
-        }
-    }
-
-
 }
