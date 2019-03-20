@@ -1,18 +1,23 @@
 package com.example.swdb;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.SharedPreferences;
 
+import com.example.swdb.data.SWSearchResult;
 import com.example.swdb.utils.SWUtils;
 import com.example.swdb.data.SWSpecies;
 
@@ -31,6 +36,8 @@ public class SpeciesDetailedActivity extends AppCompatActivity {
     private TextView mLang;
 
     private SWSpecies mSpecies;
+    private String mHomeworld;
+    private SWItemViewModel mHomeViewModel;
 
 
 
@@ -61,12 +68,28 @@ public class SpeciesDetailedActivity extends AppCompatActivity {
         mHome = findViewById(R.id.tv_spechome);
         mLang = findViewById(R.id.tv_speclang);
 
+        mHomeViewModel = ViewModelProviders.of(this).get(SWItemViewModel.class);
+
+        mHomeViewModel.getItemResults().observe(this, new Observer<SWUtils.SWItemResult>() {
+            @Override
+            public void onChanged(@Nullable SWUtils.SWItemResult result) {
+                if (result != null && result.name != null) {
+                    Log.d("Activity", result.name);
+                    mHomeworld = result.name;
+                    String spechome = getString(R.string.spec_item_home, mHomeworld);
+                    mHome.setText(spechome);
+                } else {
+                    Log.d("Activity", "null");
+                }
+            }
+        });
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(SWSpecies.EXTRA_SPECIES_ITEM)) {
             mSpecies = (SWSpecies) intent.getSerializableExtra(
                     SWSpecies.EXTRA_SPECIES_ITEM
             );
+            getHomeland(mSpecies.homeworld);
             fillInLayout(mSpecies);
         }
     }
@@ -102,9 +125,11 @@ public class SpeciesDetailedActivity extends AppCompatActivity {
         }
     }
 
+    private void getHomeland(String query) {
+        mHomeViewModel.loadItemResults(query);
+    }
+
     private void fillInLayout(SWSpecies specItem) {
-
-
         String specname = (specItem.name);
         String specclass = getString(R.string.spec_item_class, specItem.classification);
         String specdes = getString(R.string.spec_item_des, specItem.designation);
@@ -113,7 +138,7 @@ public class SpeciesDetailedActivity extends AppCompatActivity {
         String spechair = getString(R.string.spec_item_hair, specItem.hair_colors);
         String speceye = getString(R.string.spec_item_eye, specItem.eye_colors);
         String speclife = getString(R.string.spec_item_life, specItem.average_lifespan);
-        String spechome = getString(R.string.spec_item_home, specItem.homeworld);
+        String spechome = getString(R.string.spec_item_home, mHomeworld);
         String speclang = getString(R.string.spec_item_lang, specItem.language);
 
         mName.setText(specname);

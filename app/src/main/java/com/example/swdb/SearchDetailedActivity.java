@@ -1,12 +1,16 @@
 package com.example.swdb;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -31,13 +35,15 @@ public class SearchDetailedActivity extends AppCompatActivity {
     private TextView mBirth;
     private TextView mGender;
     private TextView mHome;
+    private TextView mSpec;
 
+    private SWItemViewModel mHomeViewModel;
+    private SWSpeciesViewModel mSpeciesViewModel;
 
     private SWPerson mPerson;
 
-
-    //public String[] films;
-    //public String[] species;
+    private String mHomeland;
+    private String mPersonSpec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +69,50 @@ public class SearchDetailedActivity extends AppCompatActivity {
         mEye = findViewById(R.id.tv_eye);
         mBirth = findViewById(R.id.tv_birth);
         mGender = findViewById(R.id.tv_gender);
+        mHome = findViewById(R.id.tv_home);
+        mSpec = findViewById(R.id.tv_spec);
+
+        mPersonSpec = getString(R.string.person_item_spec);
+
+        mSpeciesViewModel = ViewModelProviders.of(this).get(SWSpeciesViewModel.class);
+
+        mSpeciesViewModel.getItemResults().observe(this, new Observer<SWUtils.SWItemResult>() {
+            @Override
+            public void onChanged(@Nullable SWUtils.SWItemResult result) {
+                if (result != null && result.name != null) {
+                    mPersonSpec = mPersonSpec.concat(" " + result.name);
+                    mSpec.setText(mPersonSpec);
+                } else {
+                    Log.d("Activity", "null");
+                }
+            }
+        });
+
+        mHomeViewModel = ViewModelProviders.of(this).get(SWItemViewModel.class);
+
+        mHomeViewModel.getItemResults().observe(this, new Observer<SWUtils.SWItemResult>() {
+            @Override
+            public void onChanged(@Nullable SWUtils.SWItemResult result) {
+                if (result != null && result.name != null) {
+                    Log.d("Activity", "Homeworld: " + result.name);
+                    mHomeland = result.name;
+                    String personhome = getString(R.string.person_item_home, mHomeland);
+                    mHome.setText(personhome);
+                } else {
+                    Log.d("Activity", "null");
+                }
+            }
+        });
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(SWPerson.EXTRA_PERSON_ITEM)) {
             mPerson = (SWPerson)intent.getSerializableExtra(
                     SWPerson.EXTRA_PERSON_ITEM
             );
+            getHomeland(mPerson.homeworld);
+            for (int i = 0; i < mPerson.species.length; i++) {
+                getSpecies(mPerson.species[i]);
+            }
             fillInLayout(mPerson);
         }
     }
@@ -91,12 +135,6 @@ public class SearchDetailedActivity extends AppCompatActivity {
     }
 
     public void taketoimages() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String searchingfor = mPerson.name;
-
-        Uri geoUri = Uri.parse("geo:0,0").buildUpon()
-                .appendQueryParameter("q", searchingfor)
-                .build();
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://images.google.com/search?num=10&hl=en&site=&tbm=isch&source=hp‌​&biw=1366&bih=667&q="+ mPerson.name + "&oq=cars&gs_l=img.3..0l10.748.1058.0.1306.4.4.0.0.0.0.165‌​.209.2j1.3.0...0.0...1ac.1.8RNsNEqlcZc"));
 
         if (mapIntent.resolveActivity(getPackageManager()) != null) {
@@ -104,30 +142,13 @@ public class SearchDetailedActivity extends AppCompatActivity {
         }
     }
 
+    private void getSpecies(String query) {
+        mSpeciesViewModel.loadItemResults(query);
+    }
 
-
-//    public void shareForecast() {
-//
-//
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        String locvar = preferences.getString(getString(R.string.pref_user_key), "");
-//
-//
-//
-//        if (mForecastItem != null) {
-//            String dateString = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
-//                    .format(mForecastItem.dateTime);
-//            String shareText = getString(R.string.forecast_item_share_text,
-//                    locvar, dateString,
-//                    mForecastItem.temperature, getLetter(letter),
-//                    mForecastItem.description);
-//            ShareCompat.IntentBuilder.from(this)
-//                    .setType("text/plain")
-//                    .setText(shareText)
-//                    .setChooserTitle(R.string.share_chooser_title)
-//                    .startChooser();
-//        }
-//    }
+    private void getHomeland(String query) {
+        mHomeViewModel.loadItemResults(query);
+    }
 
     private void fillInLayout(SWPerson personItem) {
 
@@ -149,53 +170,8 @@ public class SearchDetailedActivity extends AppCompatActivity {
         mEye.setText(personeye);
         mBirth.setText(personbirth);
         mGender.setText(persongen);
+        mSpec.setText(mPersonSpec);
+        mHome.setText(mHomeland);
 
     }
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_search_detail);
-//
-//        mWeatherNameTV = findViewById(R.id.tv_repo_name);
-//        mWeatherSimpleTV = findViewById(R.id.tv_repo_stars);
-//        mWeatherForecastTV = findViewById(R.id.tv_repo_description1);
-//        mWeatherTempTV = findViewById(R.id.tv_repo_description2);
-//        mWeatherWindTV = findViewById(R.id.tv_repo_description3);
-//        mWeatherHumidityTV = findViewById(R.id.tv_repo_description4);
-//
-//
-//        mPerson = null;
-//        Intent intent = getIntent();
-//        if (intent != null && intent.hasExtra(WeatherUtils.EXTRA_WEATHER)) {
-//            mWeather = (WeatherUtils.TheWeatherSearch) intent.getSerializableExtra(WeatherUtils.EXTRA_WEATHER);
-//            mWeatherNameTV.setText(mWeather.dt_txt);
-//            mWeatherSimpleTV.setText(mWeather.weather[0].main);
-//            mWeatherForecastTV.setText("Forecast: " + mWeather.weather[0].description);
-//            mWeatherTempTV.setText("Temperature: " + Double.toString(Math.round((mWeather.main.temp) - 273.15) * (9/5) + 32) + "F");
-//            mWeatherWindTV.setText("Wind: " + mWeather.wind.speed);
-//            mWeatherHumidityTV.setText("Humidity: " + mWeather.main.humidity);
-//        }
-//    }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.weather_detail, menu);
-//        return true;
-//    }
-//
-
-//
-//
-//    public void shareRepo() {
-//        if (mWeather != null) {
-//            String shareText = getString(R.string.share_weather, mWeather.dt_txt + "\n", mWeather.weather[0].main + "\n", "Forecast: " + mWeather.weather[0].description + "\n", "Temperature: " +  Double.toString(Math.round((mWeather.main.temp) - 273.15) * (9/5) + 32) + "F" + "\n", "Wind: " +  mWeather.wind.speed + "\n", "Humidity: " + mWeather.main.humidity + "\n");
-//            ShareCompat.IntentBuilder.from(this)
-//                    .setType("text/plain")
-//                    .setText(shareText)
-//                    .setChooserTitle(R.string.share_chooser_title)
-//                    .startChooser();
-//        }
-//    }
-
 }

@@ -2,7 +2,7 @@ package com.example.swdb.data;
 
 import java.io.Serializable;
 
-public class SWStarship implements Serializable {
+public class SWStarship implements Serializable, Comparable<SWStarship> {
     public String name;
     public String model;
     public String manufacturer;
@@ -19,4 +19,8 @@ public class SWStarship implements Serializable {
 
     public static final String EXTRA_SHIP_ITEM = "com.example.android.swdb.data.SWStarship";
 
+    @Override
+    public int compareTo(SWStarship otherStarship) {
+        return this.name.compareToIgnoreCase(otherStarship.name);
+    }
 }

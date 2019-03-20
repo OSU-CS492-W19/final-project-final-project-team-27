@@ -41,6 +41,7 @@ public class SWSearchResultsActivity extends AppCompatActivity implements SWSear
     private ProgressBar mLoadingPB;
     private String mQuery;
     private String mCategory;
+    private String mSort;
     private SharedPreferences mPrefs;
 
     private SWSearchAdapter mSWSearchAdapter;
@@ -50,8 +51,11 @@ public class SWSearchResultsActivity extends AppCompatActivity implements SWSear
     protected void onCreate(Bundle savedInstanceState) {
 
         Resources res = getResources();
+        mPrefs = getSharedPreferences("com.example.swdb", MODE_PRIVATE);
+        mCategory = mPrefs.getString("searchFor", "people");
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = sharedPreferences.getBoolean(getString(R.string.pref_theme_key),res.getBoolean(R.bool.pref_theme_default_value));
+        mSort = sharedPreferences.getString(getString(R.string.pref_sort_key), res.getString(R.string.pref_sort_default_value));
         if(theme){
             setTheme(R.style.AppThemeDarkSide);
         }
@@ -61,9 +65,6 @@ public class SWSearchResultsActivity extends AppCompatActivity implements SWSear
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
-
-        mPrefs = getSharedPreferences("com.example.swdb", MODE_PRIVATE);
-        mCategory = mPrefs.getString("searchFor", "person");
 
         mSearchBoxET = findViewById(R.id.et_search_box);
         mSearchResultsRV = findViewById(R.id.rv_search_results);
@@ -107,7 +108,7 @@ public class SWSearchResultsActivity extends AppCompatActivity implements SWSear
             mQuery = intent.getStringExtra(SWUtils.EXTRA_SW_QUERY);
             mSearchBoxET.setText(mQuery);
             Log.d(TAG, mCategory);
-            doSWSearch(mQuery, mCategory);
+            doSWSearch(mQuery, mCategory, mSort);
         }
 
         Button searchButton = findViewById(R.id.btn_search);
@@ -117,14 +118,14 @@ public class SWSearchResultsActivity extends AppCompatActivity implements SWSear
                 String searchQuery = mSearchBoxET.getText().toString();
                 if (!TextUtils.isEmpty(searchQuery)) {
                     Log.d(TAG, mCategory);
-                    doSWSearch(searchQuery, mCategory);
+                    doSWSearch(searchQuery, mCategory, mSort);
                 }
             }
         });
     }
 
-    private void doSWSearch(String query, String category) {
-        mViewModel.loadSearchResults(query, category);
+    private void doSWSearch(String query, String category, String sortPref) {
+        mViewModel.loadSearchResults(query, category, sortPref);
     }
 
     @Override

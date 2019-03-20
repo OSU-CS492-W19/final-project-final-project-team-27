@@ -33,9 +33,9 @@
     <string name="pref_sort_default">Default</string>
     <string name="pref_sort_default_value" translatable="false">default</string>
     <string name="pref_sort_alpha">A-Z</string>
-    <string name="pref_sort_alpha_value" translatable="false">alpha</string>
+    <string name="pref_sort_alpha_value" translatable="false">atoz</string>
     <string name="pref_sort_revAlpha">Z-A</string>
-    <string name="pref_sort_revAlpha_value" translatable="false">revAlpha</string>
+    <string name="pref_sort_revAlpha_value" translatable="false">ztoa</string>
     <string name="pref_sort_original_value" translatable="false">@string/pref_sort_default_value</string>
 
     <string name="pref_theme_key" translatable="false">pref_theme</string>
@@ -49,6 +49,8 @@
     <string name="person_item_skin">Skin Color: %1$s</string>
     <string name="person_item_birth">Birth Year: %1$s</string>
     <string name="person_item_gender">Gender: %1$s</string>
+    <string name="person_item_spec">Species: </string>
+    <string name="person_item_home">Homeland: %1$s</string>
 
 
     <string name="planet_item_rotate">Rotation: %1$s</string>
@@ -67,7 +69,7 @@
     <string name="spec_item_hair">Hair Colors: %1$s</string>
     <string name="spec_item_eye">Eye Colors: %1$s</string>
     <string name="spec_item_life">Average Lifespan: %1$s</string>
-    <string name="spec_item_home">Homeworld: %1$s</string>
+    <string name="spec_item_home">Homeland: %1$s</string>
     <string name="spec_item_lang">Language: %1$s</string>
 
 
