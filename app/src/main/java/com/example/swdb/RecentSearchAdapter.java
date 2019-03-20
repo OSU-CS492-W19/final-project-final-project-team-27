@@ -12,18 +12,18 @@ import com.example.swdb.utils.SWUtils;
 
 public class RecentSearchAdapter extends RecyclerView.Adapter<RecentSearchAdapter.SearchResultViewHolder> {
 
-    private SWUtils.SearchDetails[] mTheRecentSearches;
+    private String[] mTheRecentSearches;
     OnSearchItemClickListener mSeachItemClickListener;
 
     public interface OnSearchItemClickListener {
-        void onSearchItemClick(SWUtils.SearchDetails searches);
+        void onSearchItemClick(String searches);
     }
 
     RecentSearchAdapter(OnSearchItemClickListener searchItemClickListener) {
         mSeachItemClickListener = searchItemClickListener;
     }
 
-    public void updateSearchResults(SWUtils.SearchDetails[] searches) {
+    public void updateSearchResults(String[] searches) {
         mTheRecentSearches = searches;
         notifyDataSetChanged();
     }
@@ -60,14 +60,14 @@ public class RecentSearchAdapter extends RecyclerView.Adapter<RecentSearchAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SWUtils.SearchDetails searchResult = mTheRecentSearches[getAdapterPosition()];
+                    String searchResult = mTheRecentSearches[getAdapterPosition()];
                     mSeachItemClickListener.onSearchItemClick(searchResult);
                 }
             });
         }
 
-        public void bind(SWUtils.SearchDetails search) {
-            mSearchResultTV.setText(search.search_item_name);
+        public void bind(String search) {
+            mSearchResultTV.setText(search);
         }
     }
 
