@@ -62,7 +62,6 @@ public class SearchDetailedActivity extends AppCompatActivity {
         mSkin = findViewById(R.id.tv_skin);
         mEye = findViewById(R.id.tv_eye);
         mBirth = findViewById(R.id.tv_birth);
-        mHome = findViewById(R.id.tv_home);
         mGender = findViewById(R.id.tv_gender);
 
         Intent intent = getIntent();
@@ -149,7 +148,6 @@ public class SearchDetailedActivity extends AppCompatActivity {
         mSkin.setText(personskin);
         mEye.setText(personeye);
         mBirth.setText(personbirth);
-        mHome.setText(personhome);
         mGender.setText(persongen);
 
     }
