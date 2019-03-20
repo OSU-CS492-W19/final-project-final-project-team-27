@@ -26,7 +26,6 @@
       
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop"
             android:theme="@style/AppThemeLightSide">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
