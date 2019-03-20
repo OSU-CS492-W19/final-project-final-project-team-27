@@ -45,17 +45,23 @@ public class SWSearchAdapter extends RecyclerView.Adapter<SWSearchAdapter.Search
         if (mResults != null) {
             switch (mCategory) {
                 case "films":
-                    return mResults.films.size();
+                    if (mResults.films != null) return mResults.films.size();
+                    break;
                 case "people":
-                    return mResults.people.size();
+                    if (mResults.people != null) return mResults.people.size();
+                    break;
                 case "planets":
-                    return mResults.planets.size();
+                    if (mResults.planets != null) return mResults.planets.size();
+                    break;
                 case "species":
-                    return mResults.species.size();
+                    if (mResults.species != null) return mResults.species.size();
+                    break;
                 case "starships":
-                    return mResults.starships.size();
+                    if (mResults.starships != null) return mResults.starships.size();
+                    break;
                 case "vehicles":
-                    return mResults.vehicles.size();
+                    if (mResults.vehicles != null) return mResults.vehicles.size();
+                    break;
                 default:
                     return 0;
             }

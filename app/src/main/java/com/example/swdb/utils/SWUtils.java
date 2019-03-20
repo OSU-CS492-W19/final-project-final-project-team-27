@@ -1,8 +1,6 @@
 package com.example.swdb.utils;
 
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.example.swdb.data.SWFilm;
@@ -16,6 +14,7 @@ import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SWUtils {
     private final static String SW_SEARCH_BASE_URL = "https://swapi.co/api/";
@@ -28,26 +27,10 @@ public class SWUtils {
     private final static String CATEGORY_SPECIES = "species";
     private final static String CATEGORY_STARSHIPS = "starships";
     private final static String CATEGORY_VEHICLES = "vehicles";
+    private final static String SORT_ATOZ = "atoz";
+    private final static String SORT_ZTOA = "ztoa";
 
-    //public static final String EXTRA_PERSON_ITEM = "com.example.android.swdb.utils.SWPerson";
-
-
-//    public static class SWPerson implements Serializable {
-//        public String name;
-//        public String height;
-//        public String mass;
-//        public String hair_color;
-//        public String skin_color;
-//        public String eye_color;
-//        public String birth_year;
-//        public String gender;
-//        public String homeworld;
-//        public SWFilm[] films;
-//        public SWSpecies[] species;
-//    }
     public static final String EXTRA_SW_QUERY = "String";
-
-    public static final String SEARCH_PREF = CATEGORY_SPECIES;
 
     public static class SWFilmsResults {
         public ArrayList<SWFilm> results;
@@ -73,6 +56,14 @@ public class SWUtils {
         public ArrayList<SWVehicle> results;
     }
 
+    public static class SWFilmResult {
+        public String title;
+    }
+
+    public static class SWItemResult {
+        public String name;
+    }
+
     public static String buildSWSearchURL(String query, String category) {
         Log.d("Search", category);
         return Uri.parse(SW_SEARCH_BASE_URL).buildUpon()
@@ -83,7 +74,74 @@ public class SWUtils {
                 .toString();
     }
 
-    public static SWSearchResult parseSWSearchResults(String json, String category) {
+    private static void sortResults(SWSearchResult results, String category, String sortPref) {
+        switch (category) {
+            case CATEGORY_FILMS:
+                if (sortPref.equals(SORT_ATOZ)) {
+                    Collections.sort(results.films);
+                } else if (sortPref.equals(SORT_ZTOA)) {
+                    Collections.sort(results.films);
+                    Collections.reverse(results.films);
+                }
+                break;
+            case CATEGORY_PEOPLE:
+                if (sortPref.equals(SORT_ATOZ)) {
+                    Collections.sort(results.people);
+                } else if (sortPref.equals(SORT_ZTOA)) {
+                    Collections.sort(results.people);
+                    Collections.reverse(results.people);
+                }
+                break;
+            case CATEGORY_PLANETS:
+                if (sortPref.equals(SORT_ATOZ)) {
+                    Collections.sort(results.planets);
+                } else if (sortPref.equals(SORT_ZTOA)) {
+                    Collections.sort(results.planets);
+                    Collections.reverse(results.planets);
+                }
+                break;
+            case CATEGORY_SPECIES:
+                if (sortPref.equals(SORT_ATOZ)) {
+                    Collections.sort(results.species);
+                } else if (sortPref.equals(SORT_ZTOA)) {
+                    Collections.sort(results.species);
+                    Collections.reverse(results.species);
+                }
+                break;
+            case CATEGORY_STARSHIPS:
+                if (sortPref.equals(SORT_ATOZ)) {
+                    Collections.sort(results.starships);
+                } else if (sortPref.equals(SORT_ZTOA)) {
+                    Collections.sort(results.starships);
+                    Collections.reverse(results.starships);
+                }
+                break;
+            case CATEGORY_VEHICLES:
+                if (sortPref.equals(SORT_ATOZ)) {
+                    Collections.sort(results.vehicles);
+                } else if (sortPref.equals(SORT_ZTOA)) {
+                    Collections.sort(results.vehicles);
+                    Collections.reverse(results.vehicles);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public static SWItemResult parseSWItem(String json) {
+        Gson gson = new Gson();
+        SWItemResult swItemResult = gson.fromJson(json, SWItemResult.class);
+        return swItemResult;
+    }
+
+    public static SWFilmResult parseSWFilm(String json) {
+        Gson gson = new Gson();
+        SWFilmResult swFilmResult = gson.fromJson(json, SWFilmResult.class);
+        return swFilmResult;
+    }
+
+    public static SWSearchResult parseSWSearchResults(String json, String category, String sortPref) {
         Gson gson = new Gson();
         SWSearchResult swSearchResult = new SWSearchResult();
 
@@ -139,6 +197,7 @@ public class SWUtils {
             default:
                 return null;
         }
+        sortResults(swSearchResult, category, sortPref);
         return swSearchResult;
     }
 

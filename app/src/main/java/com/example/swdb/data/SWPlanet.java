@@ -2,7 +2,7 @@ package com.example.swdb.data;
 
 import java.io.Serializable;
 
-public class SWPlanet implements Serializable {
+public class SWPlanet implements Serializable, Comparable<SWPlanet> {
     public String name;
     public String rotation_period;
     public String orbital_period;
@@ -15,4 +15,8 @@ public class SWPlanet implements Serializable {
 
     public static final String EXTRA_PLANET_ITEM = "com.example.android.swdb.data.SWPlanet";
 
+    @Override
+    public int compareTo(SWPlanet otherPlanet) {
+        return this.name.compareToIgnoreCase(otherPlanet.name);
+    }
 }

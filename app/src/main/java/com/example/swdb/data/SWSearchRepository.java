@@ -34,13 +34,13 @@ public class SWSearchRepository implements SWSearchAsyncTask.Callback {
         return mLoadingStatus;
     }
 
-    public void loadSearchResults(String query, String category) {
+    public void loadSearchResults(String query, String category, String sortPref) {
         if (shouldExecuteSearch(query)) {
             mCurrentQuery = query;
             mLoadingStatus.setValue(Status.LOADING);
             String url = SWUtils.buildSWSearchURL(query, category);
             Log.d(TAG, "querying search URL: " + url);
-            new SWSearchAsyncTask(url, category, this).execute();
+            new SWSearchAsyncTask(url, category, sortPref, this).execute();
         } else {
             Log.d("SWSearchRepo", "using cached results");
         }

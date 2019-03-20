@@ -2,7 +2,7 @@ package com.example.swdb.data;
 
 import java.io.Serializable;
 
-public class SWSpecies implements Serializable {
+public class SWSpecies implements Serializable, Comparable<SWSpecies> {
     public String name;
     public String classification;
     public String designation;
@@ -15,4 +15,8 @@ public class SWSpecies implements Serializable {
     public String language;
     public static final String EXTRA_SPECIES_ITEM = "com.example.android.swdb.data.SWSpecies";
 
+    @Override
+    public int compareTo(SWSpecies otherSpecies) {
+        return this.name.compareToIgnoreCase(otherSpecies.name);
+    }
 }

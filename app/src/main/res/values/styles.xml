@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/lightPrimaryDark</item>
         <item name="colorAccent">@color/lightAccent</item>
         <item name="colorButtonNormal">@color/lightAccent</item>
+        <item name="android:fontFamily">@font/death_star</item>
     </style>
 
     <style name="AppThemeDarkSide" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -16,6 +17,7 @@
         <item name="colorPrimaryDark">@color/darkPrimaryDark</item>
         <item name="colorAccent">@color/darkPrimaryAccent</item>
         <item name="colorButtonNormal">@color/darkPrimaryAccent</item>
+        <item name="android:fontFamily">@font/death_star</item>
     </style>
 
     <style name="AppTheme">@style/AppThemeLightSide</style>
